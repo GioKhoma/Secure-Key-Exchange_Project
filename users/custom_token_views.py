@@ -22,7 +22,7 @@ class TokenObtainPairResponseSerializer(serializers.Serializer):
 class DecoratedTokenObtainPairView(TokenObtainPairView):
     @swagger_auto_schema(
         responses={
-            status.HTTP_200_OK: TokenObtainPairResponseSerializer,
+            status.HTTP_200_OK: TokenObtainPairResponseSerializer(),
         }
     )
     def post(self, request, *args, **kwargs):
@@ -42,7 +42,7 @@ class TokenRefreshResponseSerializer(serializers.Serializer):
 class DecoratedTokenRefreshView(TokenRefreshView):
     @swagger_auto_schema(
         responses={
-            status.HTTP_200_OK: TokenRefreshResponseSerializer,
+            status.HTTP_200_OK: TokenRefreshResponseSerializer(),
         }
     )
     def post(self, request, *args, **kwargs):
@@ -60,7 +60,7 @@ class TokenVerifyResponseSerializer(serializers.Serializer):
 class DecoratedTokenVerifyView(TokenVerifyView):
     @swagger_auto_schema(
         responses={
-            status.HTTP_200_OK: TokenVerifyResponseSerializer,
+            status.HTTP_200_OK: TokenVerifyResponseSerializer(),
         }
     )
     def post(self, request, *args, **kwargs):
@@ -78,7 +78,7 @@ class TokenBlacklistResponseSerializer(serializers.Serializer):
 class DecoratedTokenBlacklistView(TokenBlacklistView):
     @swagger_auto_schema(
         responses={
-            status.HTTP_200_OK: TokenBlacklistResponseSerializer,
+            status.HTTP_200_OK: TokenBlacklistResponseSerializer(),
         }
     )
     def post(self, request, *args, **kwargs):

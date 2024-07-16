@@ -4,9 +4,11 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, login
 from rest_framework import status
 from .serializers import UserSerializer
+from drf_yasg.utils import swagger_auto_schema
 
 
 class RegisterView(APIView):
+    @swagger_auto_schema(request_body=UserSerializer)
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         try:
