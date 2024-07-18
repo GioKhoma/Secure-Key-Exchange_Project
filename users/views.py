@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login
 from rest_framework import status
 from .serializers import UserSerializer
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class RegisterView(APIView):
@@ -19,15 +21,24 @@ class RegisterView(APIView):
             return Response({'errors': e.detail}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# for session auth
-# class LoginView(APIView):
-#     def post(self, request):
-#         username = request.data['username']
-#         password = request.data['password']
-#
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return Response({'message': 'Login Successful'}, status=status.HTTP_200_OK)
-#
-#         return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+class LoginView(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request):
+        email = request.data['email']
+        password = request.data['password']
+
+        user = authenticate(email=email, password=password)
+
+        if user is not None:
+            refresh = RefreshToken.for_user(user)
+            access = AccessToken.for_user(user)
+
+            return Response(
+                {
+                    'refresh': str(refresh),
+                    'access': str(access)
+                }
+            )
+        else:
+            return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)

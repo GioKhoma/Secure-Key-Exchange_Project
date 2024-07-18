@@ -1,15 +1,16 @@
 from django.db import models
 from django.conf import settings
+from users.models import CustomUser
 
 
 class Channel(models.Model):
     sender_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        CustomUser,
         on_delete=models.CASCADE,
         related_name='channels_sent'
     )
     recipient_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        CustomUser,
         on_delete=models.CASCADE,
         related_name='channels_received'
     )
